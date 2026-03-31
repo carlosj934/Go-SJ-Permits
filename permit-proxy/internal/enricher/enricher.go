@@ -1,9 +1,9 @@
 package enricher
 
-import(
-	"time"
-	"strings"
+import (
 	"strconv"
+	"strings"
+	"time"
 
 	"permit-proxy/internal/models"
 )
@@ -16,7 +16,7 @@ func Enrich(rawPermit []models.RawPermitData) ([]models.Permit, error) {
 		if err != nil {
 			return nil, err
 		}
-		
+
 		finalDate, err := parseDate(p.FinalDate)
 		if err != nil {
 			return nil, err
@@ -40,24 +40,24 @@ func Enrich(rawPermit []models.RawPermitData) ([]models.Permit, error) {
 		}
 
 		permit := models.Permit{
-				Status: p.Status,
-				Zipcode: zipCode,
-				ParcelNumber: p.ParcelNumber,
-				Applicant: p.Applicant,
-				OwnerName: p.OwnerName,
-				Contractor: p.Contractor,
-				FolderNumber: p.FolderNumber,
-				FolderDesc: p.FolderDesc,
-				FolderName: p.FolderName,
-				SubTypeDesc: p.SubTypeDesc,
-				WorkDesc: p.WorkDesc,
-				PermitApprovals: p.PermitApprovals,
-				IssueDate: issueDate,
-				FinalDate: finalDate,
-				DwellingUnits: dwellingUnits,
-				PermitValuation: permitValuation, 
-				SquareFootage: squareFootage,
-				FolderRSN: p.FolderRSN,
+			Status:          p.Status,
+			Zipcode:         zipCode,
+			ParcelNumber:    p.ParcelNumber,
+			Applicant:       p.Applicant,
+			OwnerName:       p.OwnerName,
+			Contractor:      p.Contractor,
+			FolderNumber:    p.FolderNumber,
+			FolderDesc:      p.FolderDesc,
+			FolderName:      p.FolderName,
+			SubTypeDesc:     p.SubTypeDesc,
+			WorkDesc:        p.WorkDesc,
+			PermitApprovals: p.PermitApprovals,
+			IssueDate:       issueDate,
+			FinalDate:       finalDate,
+			DwellingUnits:   dwellingUnits,
+			PermitValuation: permitValuation,
+			SquareFootage:   squareFootage,
+			FolderRSN:       p.FolderRSN,
 		}
 
 		e = append(e, permit)
@@ -75,7 +75,7 @@ func parseDate(s string) (time.Time, error) {
 	if err != nil {
 		return time.Time{}, err
 	}
-	
+
 	return t, nil
 }
 
@@ -108,7 +108,7 @@ func parseInt(s string) (int64, error) {
 	}
 
 	i, err := strconv.ParseInt(s, 10, 64)
-	
+
 	if err != nil {
 		return 0, err
 	}
