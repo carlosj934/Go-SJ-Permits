@@ -1,20 +1,25 @@
 package main
 
 import (
-	"fmt"
 	"log"
+	"net/http"
 
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
+	"permit-proxy/handlers"
 	"permit-proxy/internal/store"
 )
 
 func main() {
-	p := store.New()
-	v, err := p.Get()
+	s := store.New()
+	h := handlers.NewPermitHandler(s)
 
-	if err != nil {
+	r := chi.NewRouter()
+	r.Use(middleware.Logger)
+	r.Get("/permits", h.HandlePermits)
+	r.Get("/permits/by-zip", h.HandleByZip)
+
+	if err := http.ListenAndServe(":3000", r); err != nil {
 		log.Fatal(err)
 	}
-
-	fmt.Println(len(v))
-	fmt.Printf("%+v\n", v[7])
 }
