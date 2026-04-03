@@ -17,6 +17,8 @@ func main() {
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 	r.Get("/permits", h.HandlePermits)
+	r.Get("/permits/by-zip", h.HandleByZip)
+
 	if err := http.ListenAndServe(":3000", r); err != nil {
 		log.Fatal(err)
 	}

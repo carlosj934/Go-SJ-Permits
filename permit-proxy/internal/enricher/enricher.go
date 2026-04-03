@@ -82,10 +82,11 @@ func parseDate(s string) (time.Time, error) {
 func extractZip(gxLocation string) string {
 	z := strings.Fields(gxLocation)
 
-	if len(z) == 0 {
+	if len(z) == 0 || len(z[len(z)-1]) < 5 {
 		return ""
 	}
-	return z[len(z)-1]
+
+	return z[len(z)-1][0:5]
 }
 
 func parseFloat(s string) (float64, error) {
